@@ -17,6 +17,7 @@ with mp_hands.Hands(
         min_detection_confidence=0.5,
         min_tracking_confidence=0.5) as hands:
     start: float = time.time()
+    frame: int = 0
     while cap.isOpened():
         success: bool
         image: cv2.VideoCapture
@@ -44,9 +45,10 @@ with mp_hands.Hands(
             for hand_idx, hand_landmarks in enumerate(results.multi_hand_landmarks):
                 # print(hand_landmarks.landmark[0].x)
                 df_list = [
-                    {'Time': time.time() - start, 'Hand#': hand_idx, 'Part#': i, 'X': _.x, 'Y': _.y, 'Z': _.z}
+                    {'Frame': frame, 'Time': time.time() - start, 'Hand': hand_idx, 'Part': i, 'X': _.x, 'Y': _.y, 'Z': _.z}
                     for i, _ in enumerate(hand_landmarks.landmark)
                 ]
+                frame += 1
                 df = pd.DataFrame(df_list)
                 data_list.append(df)
 
