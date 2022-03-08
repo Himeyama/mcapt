@@ -1,5 +1,5 @@
 # mcapt
-手の軌道追跡
+([mediapipe](https://github.com/google/mediapipe)) を利用した手の軌道追跡
 
 ## インストール
 > Poetry のインストール
