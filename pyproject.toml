@@ -15,7 +15,6 @@ pandas = "^1.4.1"
 pytest = "^7.0.1"
 pyproject-flake8 = "^0.0.1-alpha.2"
 autopep8 = "^1.6.0"
-ipykernel = "^6.9.1"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

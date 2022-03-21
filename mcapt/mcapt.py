@@ -3,6 +3,7 @@ import cv2
 import mediapipe as mp
 import pandas as pd
 import time
+import sys
 
 mp_drawing = mp.solutions.drawing_utils
 mp_drawing_styles = mp.solutions.drawing_styles
