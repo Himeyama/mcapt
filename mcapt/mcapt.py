@@ -3,7 +3,8 @@ import cv2
 import mediapipe as mp
 import pandas as pd
 import time
-import sys
+import logging as log
+log.basicConfig(level=log.DEBUG)
 
 mp_drawing = mp.solutions.drawing_utils
 mp_drawing_styles = mp.solutions.drawing_styles
@@ -40,13 +41,19 @@ with mp_hands.Hands(
         image.flags.writeable = True
         image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
 
-        # results.multi_hand_landmarks: list[mp.framework.formats.landmark_pb2.NormalizedLandmarkList]
         if results.multi_hand_landmarks:
 
-            for hand_idx, hand_landmarks in enumerate(results.multi_hand_landmarks):
+            for hand_idx, hand_landmarks in \
+                    enumerate(results.multi_hand_landmarks):
                 # print(hand_landmarks.landmark[0].x)
                 df_list = [
-                    {'Frame': frame, 'Time': time.time() - start, 'Hand': hand_idx, 'Part': i, 'X': _.x, 'Y': _.y, 'Z': _.z}
+                    {'Frame': frame,
+                     'Time': time.time() - start,
+                     'Hand': hand_idx,
+                     'Part': i,
+                     'X': _.x,
+                     'Y': _.y,
+                     'Z': _.z}
                     for i, _ in enumerate(hand_landmarks.landmark)
                 ]
                 frame += 1
@@ -61,11 +68,16 @@ with mp_hands.Hands(
                     mp_drawing_styles.get_default_hand_connections_style())
 
         # Flip the image horizontally for a selfie-view display.
-        cv2.imshow('MediaPipe Hands', cv2.flip(image, 1))
+        cv2.imshow('MediaPipe Hands (press ESC to exit)', cv2.flip(image, 1))
         if cv2.waitKey(5) & 0xFF == 27:  # ESC
             break
 
-df = pd.concat(data_list)
-df.to_csv("test.csv", index=None)
+# cap.release()
+cv2.destroyAllWindows()
 
-cap.release()
+if data_list:
+    log.info('キャプチャーデータを保存しました。')
+    df = pd.concat(data_list)
+    df.to_csv("test.csv", index=None)
+else:
+    log.warning('キャプチャーデータは存在しないため保存されませんでした。')

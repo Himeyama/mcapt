@@ -1,7 +1,7 @@
 # mcapt
 ([mediapipe](https://github.com/google/mediapipe)) を利用した手の軌道追跡
 
-- **Windows 11** 環境で開発中
+- **Windows 11** 環境で開発中 (WSL / WSL2 では**使用不可**)
 
 ## インストール
 ### 注意
