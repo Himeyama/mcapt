@@ -42,7 +42,6 @@ with mp_hands.Hands(
         image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
 
         if results.multi_hand_landmarks:
-
             for hand_idx, hand_landmarks in \
                     enumerate(results.multi_hand_landmarks):
                 # print(hand_landmarks.landmark[0].x)
